@@ -6,13 +6,13 @@
 #
 # ::
 #
-##   erd_FOUND - true if erd and all required components found on the system
+#   erd_FOUND - true if erd and all required components found on the system
 ##   erd_VERSION - erd version in format Major.Minor.Release
-##   erd_INCLUDE_DIRS - Directories where erd header is located.
-##   erd_INCLUDE_DIR - same as DIRS
-##   erd_DEFINITIONS: Definitions necessary to use erd, namely USING_erd.
-##   erd_LIBRARIES - erd library to link against.
-##   erd_LIBRARY - same as LIBRARIES
+#   erd_INCLUDE_DIRS - Directories where erd header is located.
+#   erd_INCLUDE_DIR - same as DIRS
+#   erd_DEFINITIONS: Definitions necessary to use erd, namely USING_erd.
+#   erd_LIBRARIES - erd library to link against.
+#   erd_LIBRARY - same as LIBRARIES
 #
 #
 # Available components: shared static
@@ -23,22 +23,22 @@
 #   static - search for only static library
 #
 #
-## Exported targets:
-##
-## ::
-##
-## If erd is found, this module defines the following :prop_tgt:`IMPORTED`
-## target. Note that if erd library is static, importing project must
-## declare Fortran as a language in order to populate the link libs. ::
-##
-##   erd::erd - the main erd library with header, defs, & linker lang attached.
+# Exported targets:
+#
+# ::
+#
+# If erd is found, this module defines the following :prop_tgt:`IMPORTED`
+# target. Note that if erd library is static, importing project must
+# declare Fortran as a language in order to populate the link libs. ::
+#
+#   erd::erd - the main erd library with header, defs, & linker lang attached.
 #
 #
 # Suggested usage:
 #
 # ::
 #
-##   find_package(erd)
+#   find_package(erd)
 ##   find_package(erd 1.2 EXACT CONFIG REQUIRED COMPONENTS static)
 #
 #
@@ -115,6 +115,7 @@ else()
 endif()
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${_hold_library_suffixes})
 set(${PN}_LIBRARIES ${${PN}_LIBRARY})
+set(${PN}_DEFINITIONS USING_${PN})
 
 check_required_components(${PN})
 
