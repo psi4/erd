@@ -1,18 +1,18 @@
-# liberdConfig.cmake
+# erdConfig.cmake
 # ------------------
 #
-# liberd cmake module.
+# erd cmake module.
 # This module sets the following variables in your project:
 #
 # ::
 #
-##   liberd_FOUND - true if liberd and all required components found on the system
-##   liberd_VERSION - liberd version in format Major.Minor.Release
-##   liberd_INCLUDE_DIRS - Directories where liberd header is located.
-##   liberd_INCLUDE_DIR - same as DIRS
-##   liberd_DEFINITIONS: Definitions necessary to use liberd, namely USING_liberd.
-##   liberd_LIBRARIES - liberd library to link against.
-##   liberd_LIBRARY - same as LIBRARIES
+##   erd_FOUND - true if erd and all required components found on the system
+##   erd_VERSION - erd version in format Major.Minor.Release
+##   erd_INCLUDE_DIRS - Directories where erd header is located.
+##   erd_INCLUDE_DIR - same as DIRS
+##   erd_DEFINITIONS: Definitions necessary to use erd, namely USING_erd.
+##   erd_LIBRARIES - erd library to link against.
+##   erd_LIBRARY - same as LIBRARIES
 #
 #
 # Available components: shared static
@@ -27,34 +27,34 @@
 ##
 ## ::
 ##
-## If liberd is found, this module defines the following :prop_tgt:`IMPORTED`
-## target. Note that if liberd library is static, importing project must
+## If erd is found, this module defines the following :prop_tgt:`IMPORTED`
+## target. Note that if erd library is static, importing project must
 ## declare Fortran as a language in order to populate the link libs. ::
 ##
-##   liberd::erd - the main erd library with header, defs, & linker lang attached.
+##   erd::erd - the main erd library with header, defs, & linker lang attached.
 #
 #
 # Suggested usage:
 #
 # ::
 #
-##   find_package(liberd)
-##   find_package(liberd 1.2 EXACT CONFIG REQUIRED COMPONENTS static)
+##   find_package(erd)
+##   find_package(erd 1.2 EXACT CONFIG REQUIRED COMPONENTS static)
 #
 #
 # The following variables can be set to guide the search for this package:
 #
 # ::
 #
-#   liberd_DIR - CMake variable, set to directory containing this Config file
+#   erd_DIR - CMake variable, set to directory containing this Config file
 #   CMAKE_PREFIX_PATH - CMake variable, set to root directory of this package
 #   PATH - environment variable, set to bin directory of this package
-#   CMAKE_DISABLE_FIND_PACKAGE_liberd - CMake variable, disables
-#     find_package(liberd) when not REQUIRED, perhaps to force internal build
+#   CMAKE_DISABLE_FIND_PACKAGE_erd - CMake variable, disables
+#     find_package(erd) when not REQUIRED, perhaps to force internal build
 
 @PACKAGE_INIT@
 
-set(PN liberd)
+set(PN erd)
 set (_valid_components
     static
     shared

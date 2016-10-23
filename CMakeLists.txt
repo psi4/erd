@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(liberd LANGUAGES Fortran C)
+project(erd LANGUAGES Fortran C)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 ################################### Options ####################################
