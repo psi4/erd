@@ -39,53 +39,11 @@ if(NOT DEFINED ${variable} OR "${${variable}}" STREQUAL "")
 endif()
 endmacro(option_with_default)
 
-#Common guts to adding a Psi4 library irrespective of bin vs. lib home
-#NOTE: list of sources is a CMake list
-#
-#Syntax general_add_library(<library name>, <list of sources>, <lib or bin>,
-#                           <dependencies>)
-#
-macro(general_add_library libname sources dir)
-   #TODO: Switch to OBJECT library?  Simplifies this macro...
-   if(${dir} MATCHES lib)
-      set(prefix lib)
-   endif()
-   add_library(${libname} ${${sources}})
-   set_target_properties(${libname} PROPERTIES 
-       POSITION_INDEPENDENT_CODE ${BUILD_FPIC}
-   )
-   install(TARGETS ${libname} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-   install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
-      DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/psi4/src/${dir}/${prefix}${libname}
-      FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
-   set_property(GLOBAL APPEND PROPERTY LIBLIST ${libname})
-   set(depend_name "${ARGN}")
-   foreach(name_i IN LISTS depend_name)
-      target_link_libraries(${libname} INTERFACE ${name_i})
-   endforeach()
-   target_include_directories(${libname} PUBLIC ${Boost_INCLUDE_DIRS} 
-                                                ${LIBDERIV_INCLUDE_DIRS})
-endmacro(general_add_library libname sources prefix dir)
-
-#Adds a psi4 library that lives in lib
-#
-#Syntax: psi4_add_library(<library name> <list of sources> <dependencies>)
-#
-macro(psi4_add_library libname sources)
-   general_add_library(${libname} ${sources} lib ${ARGN}) 
-endmacro(psi4_add_library libname sources)
-
-#Adds a psi4 library that lives in bin
-#
-#Syntax: psi4_add_binary(<library name> <list of sources> <dependencies>
-#
-macro(psi4_add_binary libname sources)
-   general_add_library(${libname} ${sources} bin ${ARGN})
-endmacro(psi4_add_binary libname sources)
-
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
-include(CheckFortranCompilerFlag)  # CMake >= 3.3, so local copy in cmake/
+if(CMAKE_Fortran_COMPILER)
+    include(CheckFortranCompilerFlag)  # CMake >= 3.3, so local copy in cmake/
+endif()
 
 #The guts of the next two functions, use the wrappers please
 #
@@ -170,13 +128,17 @@ endmacro()
 #Syntax: add_flags(<flags to add>)
 #
 macro(add_flags FLAGS)
-    if(CMAKE_C_COMPILER)
+    get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
+    list(FIND languages "C" _index_c)
+    list(FIND languages "CXX" _index_cxx)
+    list(FIND languages "Fortran" _index_fortran)
+    if (${_index_c} GREATER -1)
         add_C_flags(${FLAGS})
     endif()
-    if(CMAKE_CXX_COMPILER)
+    if (${_index_cxx} GREATER -1)
         add_CXX_flags(${FLAGS})
     endif()
-    if(CMAKE_Fortran_COMPILER)
+    if (${_index_fortran} GREATER -1)
         add_Fortran_flags(${FLAGS})
     endif()
 endmacro()
@@ -192,18 +154,3 @@ macro(option_with_flags option msg default)
        add_flags("${ARGN}")
     endif()
 endmacro()
-
-#Macro so I don't have to look at a ton of if statements for adding each plugin
-#
-#Syntax: optional_plugin(<plugin name>)
-#
-macro(optional_plugin plugin_name)
-string(TOUPPER ${plugin_name} PLUGIN_NAME)
-if(${ENABLE_${PLUGIN_NAME}})
-   find_package(${plugin_name} REQUIRED)
-   set_property(GLOBAL APPEND PROPERTY PSI4_MODULES ${${PLUGIN_NAME}_LIBRARIES})
-   add_definitions(-DENABLE_${PLUGIN_NAME})
-else()
-   add_library(${plugin_name} INTERFACE)
-endif()
-endmacro(optional_plugin plugin_name)

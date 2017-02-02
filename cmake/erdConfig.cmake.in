@@ -1,13 +1,11 @@
 # erdConfig.cmake
-# ------------------
+# ---------------
 #
-# erd cmake module.
-# This module sets the following variables in your project:
-#
-# ::
+# ERD cmake module.
+# This module sets the following variables in your project::
 #
 #   erd_FOUND - true if erd and all required components found on the system
-##   erd_VERSION - erd version in format Major.Minor.Release
+#   erd_VERSION - erd version in format Major.Minor.Release
 #   erd_INCLUDE_DIRS - Directories where erd header is located.
 #   erd_INCLUDE_DIR - same as DIRS
 #   erd_DEFINITIONS: Definitions necessary to use erd, namely USING_erd.
@@ -15,17 +13,13 @@
 #   erd_LIBRARY - same as LIBRARIES
 #
 #
-# Available components: shared static
-#
-# ::
+# Available components: shared static ::
 #
 #   shared - search for only shared library
 #   static - search for only static library
 #
 #
-# Exported targets:
-#
-# ::
+# Exported targets::
 #
 # If erd is found, this module defines the following :prop_tgt:`IMPORTED`
 # target. Note that if erd library is static, importing project must
@@ -34,17 +28,13 @@
 #   erd::erd - the main erd library with header, defs, & linker lang attached.
 #
 #
-# Suggested usage:
-#
-# ::
+# Suggested usage::
 #
 #   find_package(erd)
-##   find_package(erd 1.2 EXACT CONFIG REQUIRED COMPONENTS static)
+#   find_package(erd 3.0.6 EXACT CONFIG REQUIRED COMPONENTS static)
 #
 #
-# The following variables can be set to guide the search for this package:
-#
-# ::
+# The following variables can be set to guide the search for this package::
 #
 #   erd_DIR - CMake variable, set to directory containing this Config file
 #   CMAKE_PREFIX_PATH - CMake variable, set to root directory of this package
