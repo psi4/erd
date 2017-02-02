@@ -26,6 +26,16 @@ include(GNUInstallDirs)
 include(FortranCInterface)
 include(CMakePackageConfigHelpers)
 
+# Requires OpenMP
+# By default, some variables may be static in Fortran. This causes issues
+# when calling from multiple threads. So we have to disable that
+if("${CMAKE_Fortran_COMPILER_ID}" MATCHES "Intel")
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -recursive")
+elseif("${CMAKE_Fortran_COMPILER_ID}" MATCHES "GNU")
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -frecursive")
+endif()
+
+
 set(PN ${PROJECT_NAME})
 
 # <<<  Build  >>>

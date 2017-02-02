@@ -184,37 +184,19 @@ C
 C             ...calculate the A,B,C,D norms.
 C
 C
-         POWER = DFLOAT (SHELLA) * HALF + ZP75
-         IF (EQUALAB) THEN
-             DO N = 1,NPGTOA
-                NORMA (N) = ALPHAA (N) ** POWER
-                NORMB (N) = NORMA (N)
-             END DO
-         ELSE
-             DO N = 1,NPGTOA
-                NORMA (N) = ALPHAA (N) ** POWER
-             END DO
-             POWER = DFLOAT (SHELLB) * HALF + ZP75
-             DO N = 1,NPGTOB
-                NORMB (N) = ALPHAB (N) ** POWER
-             END DO
-         END IF
 
-         POWER = DFLOAT (SHELLC) * HALF + ZP75
-         IF (EQUALCD) THEN
-             DO N = 1,NPGTOC
-                NORMC (N) = ALPHAC (N) ** POWER
-                NORMD (N) = NORMC (N)
-             END DO
-         ELSE
-             DO N = 1,NPGTOC
-                NORMC (N) = ALPHAC (N) ** POWER
-             END DO
-             POWER = DFLOAT (SHELLD) * HALF + ZP75
-             DO N = 1,NPGTOD
-                NORMD (N) = ALPHAD (N) ** POWER
-             END DO
-         END IF
+         DO N = 1,NPGTOA
+            NORMA (N) = 1.0
+         END DO
+         DO N = 1,NPGTOB
+            NORMB (N) = 1.0
+         END DO
+         DO N = 1,NPGTOC
+            NORMC (N) = 1.0
+         END DO
+         DO N = 1,NPGTOD
+            NORMD (N) = 1.0
+         END DO
 C
 C
 C             ...rescale one of the A,B,C,D norms, which has the
@@ -227,19 +209,19 @@ C
 
          IF (NPGTOA.EQ.NPMIN) THEN
              DO N = 1,NPGTOA
-                NORMA (N) = FACTOR * NORMA (N)
+                NORMA (N) = FACTOR
              END DO
          ELSE IF (NPGTOB.EQ.NPMIN) THEN
              DO N = 1,NPGTOB
-                NORMB (N) = FACTOR * NORMB (N)
+                NORMB (N) = FACTOR
              END DO
          ELSE IF (NPGTOC.EQ.NPMIN) THEN
              DO N = 1,NPGTOC
-                NORMC (N) = FACTOR * NORMC (N)
+                NORMC (N) = FACTOR
              END DO
          ELSE
              DO N = 1,NPGTOD
-                NORMD (N) = FACTOR * NORMD (N)
+                NORMD (N) = FACTOR
              END DO
          END IF
 C
