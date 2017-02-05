@@ -25,9 +25,9 @@ option_with_flags(ENABLE_XHOST "Enable processor-specific optimization" ON
 ######################### Process & Validate Options ###########################
 include(autocmake_safeguards)
 include(autocmake_omp)
-include(autocmake_static_library)
+include(custom_static_library)
 
-# BP: By default, some variables may be static in Fortran. This causes issues
+# BPP: By default, some variables may be static in Fortran. This causes issues
 #   when calling from multiple threads. So we have to disable that through
 #   `-recursive` compiler flag. This is taken care of by enabling `-openmp`
 #   which, for Intel, also triggers the thread-safe ifcoremt over ifcore.
