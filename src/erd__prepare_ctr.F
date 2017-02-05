@@ -184,7 +184,39 @@ C
 C             ...calculate the A,B,C,D norms.
 C
 C
+C BPP for psi4         POWER = DFLOAT (SHELLA) * HALF + ZP75
+C BPP for psi4         IF (EQUALAB) THEN
+C BPP for psi4             DO N = 1,NPGTOA
+C BPP for psi4                NORMA (N) = ALPHAA (N) ** POWER
+C BPP for psi4                NORMB (N) = NORMA (N)
+C BPP for psi4             END DO
+C BPP for psi4         ELSE
+C BPP for psi4             DO N = 1,NPGTOA
+C BPP for psi4                NORMA (N) = ALPHAA (N) ** POWER
+C BPP for psi4             END DO
+C BPP for psi4             POWER = DFLOAT (SHELLB) * HALF + ZP75
+C BPP for psi4             DO N = 1,NPGTOB
+C BPP for psi4                NORMB (N) = ALPHAB (N) ** POWER
+C BPP for psi4             END DO
+C BPP for psi4         END IF
+  
+C BPP for psi4         POWER = DFLOAT (SHELLC) * HALF + ZP75
+C BPP for psi4         IF (EQUALCD) THEN
+C BPP for psi4             DO N = 1,NPGTOC
+C BPP for psi4                NORMC (N) = ALPHAC (N) ** POWER
+C BPP for psi4                NORMD (N) = NORMC (N)
+C BPP for psi4             END DO
+C BPP for psi4         ELSE
+C BPP for psi4             DO N = 1,NPGTOC
+C BPP for psi4                NORMC (N) = ALPHAC (N) ** POWER
+C BPP for psi4             END DO
+C BPP for psi4             POWER = DFLOAT (SHELLD) * HALF + ZP75
+C BPP for psi4             DO N = 1,NPGTOD
+C BPP for psi4                NORMD (N) = ALPHAD (N) ** POWER
+C BPP for psi4             END DO
+C BPP for psi4         END IF
 
+C BPP for psi4 START This normalization block replaces that commented above
          DO N = 1,NPGTOA
             NORMA (N) = 1.0
          END DO
@@ -197,6 +229,7 @@ C
          DO N = 1,NPGTOD
             NORMD (N) = 1.0
          END DO
+C BPP for psi4 END
 C
 C
 C             ...rescale one of the A,B,C,D norms, which has the
